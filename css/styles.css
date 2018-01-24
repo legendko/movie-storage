@@ -1,3 +1,19 @@
 #movie-form {
 	display: none;
 }
+
+#movies_table {
+	margin-top: 15px;
+}
+
+.hint {
+	color: grey;
+}
+
+#ml {
+	margin-left: 15px;
+}
+
+.block {
+	display: inline-block;
+}

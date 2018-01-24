@@ -53,12 +53,12 @@
 
 				<form method="POST" action="/upload-file" enctype="multipart/form-data">
 					<div class="form-group">
-						<strong>Upload file:</strong> 
-						<input type="file" name="file" />
+						<strong>or upload file:</strong> 
+						<input type="file" name="file" />							
 					</div>
 
 					<div class="form-group">
-						<button type="submit" class="btn btn-success">Add</button>
+						<button type="submit" class="btn btn-success">Upload</button>
 					</div>	
 				</form>
 
@@ -68,9 +68,45 @@
 
 				<hr>
 
+				<?php if(isset($_SESSION['success-message'])): ?>
+					<div class="alert alert-success" role="alert">
+						<?= $_SESSION['success-message'] ?>
+						<?php unset($_SESSION['success-message']) ?>
+					</div>
+				<?php elseif(isset($_SESSION['fail-message'])): ?>
+					<div class="alert alert-danger" role="alert">
+						<?= $_SESSION['fail-message'] ?>
+						<?php unset($_SESSION['fail-message']) ?>
+					</div>
+				<?php endif; ?>
+
 				<?php if(count($movies) > 0) : ?>
+					<form action="/search-movie" method="POST">
+						<div class="row">
+							<div class="form-group">
+								<div class="col-sm-10">
+									<input type="text" name="search" class="form-control">
+								</div>
+								<div class="col-sm-2">
+									<button type="submit" class="btn btn-primary pull-right">Search</button>
+								</div>
+								<div class="col-sm-12">
+									<small class="hint">min: 5 symbols</small>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input type="checkbox" name="params[]" value="title">by Title
+									<input type="checkbox" name="params[]" value="stars" id="ml">by Stars
+								</div>
+							</div>
+						</div>
+					</form>
+
 					<table class="table table-striped table-bordered" cellspacing="0" width="100%" id="movies_table">
-						<thead class="text-center">
+						<thead>
 							<tr>
 								<th> Title </th>
 								<th> Release Year </th>
@@ -81,7 +117,7 @@
 						</thead>
 						<tbody>
 							<?php foreach($movies as $movie): ?>
-								<tr class="text-center">
+								<tr>
 									<td><?= $movie->name ?></td>
 									<td><?= $movie->year ?></td>
 									<td><?= $movie->format ?></td>
@@ -105,12 +141,9 @@
 </body>
 
 <script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
-<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
 <script>
 	$(function() {
-	    $('#movies_table').DataTable();
-
 	    $('#open-movie-form').on('click', function() {
 	    	$(this).fadeOut(500, function() {
 	    		$('#movie-form').slideDown();
