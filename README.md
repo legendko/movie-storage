@@ -1,5 +1,5 @@
-# webbylab-movie-storage
-WebbyLab Movie Storage
+# movie-storage
+Movie Storage
 
 Installation process
 
